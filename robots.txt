@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://talhamughal1120.github.io/Tool-Image-Compressor/sitemap.xml
