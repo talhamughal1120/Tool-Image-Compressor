@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Image Compressor</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.upload {
+    border: 2px dashed #777;
+    border-radius: 14px;
+    padding: 35px 20px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.upload:hover {
+    background: #f8f8f8;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.controls {
+    margin: 20px 0;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+#qualityValue {
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 6px;
+}
+
+.compress {
+    background: #111;
+    color: white;
+}
+
+.download {
+    background: #16803c;
+    color: white;
+    display: none;
+}
+
+.info {
+    margin-top: 25px;
+    color: #555;
+    font-size: 14px;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Free Image Compressor</h1>
+
+<p class="subtitle">
+Compress your images quickly and easily.
+</p>
+
+<label class="upload" for="imageInput">
+    📁 Click here to choose an image
+</label>
+
+<input type="file" id="imageInput" accept="image/*">
+
+<div class="controls">
+
+<label>
+Compression Quality:
+<span id="qualityValue">70%</span>
+</label>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="70"
+>
+
+</div>
+
+<button class="compress" onclick="compressImage()">
+Compress Image
+</button>
+
+<a id="downloadLink" download="compressed-image.jpg">
+<button class="download" id="downloadButton">
+Download Image
+</button>
+</a>
+
+<div class="result" id="result"></div>
+
+<p class="info">
+Your image is processed directly in your browser.
+It is not uploaded to a server.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("imageInput");
+const quality = document.getElementById("quality");
+const qualityValue = document.getElementById("qualityValue");
+
+quality.addEventListener("input", function() {
+    qualityValue.textContent = quality.value + "%";
+});
+
+function compressImage() {
+
+    const file = imageInput.files[0];
+
+    if (!file) {
+        alert("Please choose an image first.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+
+        const img = new Image();
+
+        img.onload = function() {
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            const compressedData = canvas.toDataURL(
+                "image/jpeg",
+                quality.value / 100
+            );
+
+            const originalSize = file.size;
+
+            const base64Length = compressedData.length - 
+                "data:image/jpeg;base64,".length;
+
+            const compressedSize = Math.round(
+                base64Length * 0.75
+            );
+
+            const reduction = Math.max(
+                0,
+                Math.round(
+                    (1 - compressedSize / originalSize) * 100
+                )
+            );
+
+            document.getElementById("result").innerHTML =
+                "Original: " +
+                formatBytes(originalSize) +
+                " → Compressed: " +
+                formatBytes(compressedSize) +
+                "<br>Approx. reduction: " +
+                reduction +
+                "%";
+
+            const downloadLink =
+                document.getElementById("downloadLink");
+
+            downloadLink.href = compressedData;
+
+            document.getElementById("downloadButton").style.display =
+                "inline-block";
+        };
+
+        img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function formatBytes(bytes) {
+
+    if (bytes === 0) return "0 Bytes";
+
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(
+        Math.log(bytes) / Math.log(1024)
+    );
+
+    return (
+        parseFloat(
+            (bytes / Math.pow(1024, i)).toFixed(2)
+        ) +
+        " " +
+        sizes[i]
+    );
+}
+
+</script>
+
+</body>
+</html>
