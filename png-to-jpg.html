@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PNG to JPG Converter Online - Free</title>
+
+<meta name="description" content="Convert PNG images to JPG online for free. Fast, private and easy PNG to JPG converter with no image upload required.">
+
+<meta name="keywords" content="PNG to JPG, PNG to JPG converter, convert PNG to JPG, image converter, JPG converter">
+
+<meta name="robots" content="index, follow">
+
+<meta name="author" content="Tool Image Compressor">
+
+<link rel="canonical" href="https://talhamughal1120.github.io/Tool-Image-Compressor/png-to-jpg.html">
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: #111827;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px 18px 35px;
+}
+
+/* Navigation */
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #334155;
+    background: white;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-size: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.navbar a:hover {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+/* Main card */
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 35px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+    font-size: 34px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin: 10px 0 30px;
+}
+
+/* Upload */
+
+.drop-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #94a3b8;
+    border-radius: 18px;
+    padding: 45px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8fafc;
+    min-height: 180px;
+}
+
+.drop-zone:hover {
+    background: #f1f5f9;
+}
+
+.drop-icon {
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+
+.drop-zone strong {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.drop-zone span {
+    display: block;
+    width: 100%;
+    color: #64748b;
+    font-size: 14px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Preview */
+
+.preview-box {
+    display: none;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.preview-box img {
+    max-width: 100%;
+    max-height: 350px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-weight: bold;
+    word-break: break-word;
+}
+
+/* Controls */
+
+.controls {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 15px;
+}
+
+.control-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Buttons */
+
+.buttons {
+    text-align: center;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.convert-btn {
+    background: #4f46e5;
+    color: white;
+}
+
+.convert-btn:hover {
+    background: #4338ca;
+}
+
+.download-btn {
+    display: none;
+    background: #16a34a;
+    color: white;
+}
+
+.download-btn:hover {
+    background: #15803d;
+}
+
+.clear-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+/* Result */
+
+.result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f0fdf4;
+    text-align: center;
+}
+
+.result strong {
+    font-size: 20px;
+}
+
+.info {
+    text-align: center;
+    margin-top: 25px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .drop-zone {
+        padding: 35px 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<!-- Navigation -->
+
+<nav class="navbar">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="image-compressor.html">
+Compressor
+</a>
+
+<a href="image-resizer.html">
+Resizer
+</a>
+
+<a href="jpg-to-webp.html">
+JPG to WebP
+</a>
+
+<a href="png-to-jpg.html">
+PNG to JPG
+</a>
+
+</nav>
+
+
+<!-- Main Tool -->
+
+<div class="card">
+
+<h1>
+PNG to JPG Converter Online
+</h1>
+
+<p class="subtitle">
+Convert PNG images to JPG quickly and easily.
+</p>
+
+
+<label
+class="drop-zone"
+id="dropZone"
+for="imageInput"
+>
+
+<div class="drop-icon">
+🖼️
+</div>
+
+<strong>
+Click to choose a PNG image
+</strong>
+
+<span>
+or drag & drop your PNG image here
+</span>
+
+</label>
+
+
+<input
+type="file"
+id="imageInput"
+accept="image/png,.png"
+>
+
+
+<!-- Preview -->
+
+<div
+class="preview-box"
+id="previewBox"
+>
+
+<img
+id="previewImage"
+alt="PNG image preview"
+>
+
+<div
+class="file-name"
+id="fileName"
+></div>
+
+</div>
+
+
+<!-- Quality -->
+
+<div
+class="controls"
+id="controls"
+>
+
+<div class="control-title">
+
+<span>
+JPG Quality
+</span>
+
+<span id="qualityValue">
+90%
+</span>
+
+</div>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="90"
+>
+
+</div>
+
+
+<!-- Buttons -->
+
+<div class="buttons">
+
+<button
+class="convert-btn"
+onclick="convertImage()"
+>
+Convert to JPG
+</button>
+
+<button
+class="download-btn"
+id="downloadButton"
+onclick="downloadImage()"
+>
+Download JPG
+</button>
+
+<button
+class="clear-btn"
+onclick="clearImage()"
+>
+Clear
+</button>
+
+</div>
+
+
+<!-- Result -->
+
+<div
+class="result"
+id="result"
+>
+
+<strong>
+Conversion Complete!
+</strong>
+
+<p id="resultText"></p>
+
+</div>
+
+
+<p class="info">
+
+🔒 Your image is processed directly in your browser.
+
+<br>
+
+Your image is not uploaded to our server.
+
+</p>
+
+</div>
+
+
+<div class="footer">
+
+PNG to JPG Converter • Fast • Private • No Upload
+
+</div>
+
+
+</div>
+
+
+<script>
+
+let selectedFile = null;
+let convertedData = null;
+
+const imageInput =
+document.getElementById("imageInput");
+
+const dropZone =
+document.getElementById("dropZone");
+
+const previewBox =
+document.getElementById("previewBox");
+
+const previewImage =
+document.getElementById("previewImage");
+
+const fileName =
+document.getElementById("fileName");
+
+const controls =
+document.getElementById("controls");
+
+const quality =
+document.getElementById("quality");
+
+const qualityValue =
+document.getElementById("qualityValue");
+
+const result =
+document.getElementById("result");
+
+const resultText =
+document.getElementById("resultText");
+
+const downloadButton =
+document.getElementById("downloadButton");
+
+
+/* Quality slider */
+
+quality.addEventListener(
+"input",
+function() {
+
+    qualityValue.textContent =
+        quality.value + "%";
+
+});
+
+
+/* File selection */
+
+imageInput.addEventListener(
+"change",
+function(event) {
+
+    if (event.target.files.length > 0) {
+
+        loadImage(
+            event.target.files[0]
+        );
+
+    }
+
+});
+
+
+/* Drag over */
+
+dropZone.addEventListener(
+"dragover",
+function(event) {
+
+    event.preventDefault();
+
+});
+
+
+/* Drop */
+
+dropZone.addEventListener(
+"drop",
+function(event) {
+
+    event.preventDefault();
+
+    if (event.dataTransfer.files.length > 0) {
+
+        loadImage(
+            event.dataTransfer.files[0]
+        );
+
+    }
+
+});
+
+
+/* Load PNG */
+
+function loadImage(file) {
+
+    if (
+        file.type !== "image/png" &&
+        !file.name.toLowerCase().endsWith(".png")
+    ) {
+
+        alert(
+            "Please choose a PNG image."
+        );
+
+        return;
+
+    }
+
+    selectedFile =
+        file;
+
+    fileName.textContent =
+        file.name;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    function(event) {
+
+        previewImage.src =
+            event.target.result;
+
+        previewBox.style.display =
+            "block";
+
+        controls.style.display =
+            "block";
+
+    };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+
+    result.style.display =
+        "none";
+
+    downloadButton.style.display =
+        "none";
+
+    convertedData =
+        null;
+
+}
+
+
+/* Convert */
+
+function convertImage() {
+
+    if (!selectedFile) {
+
+        alert(
+            "Please choose a PNG image first."
+        );
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    function(event) {
+
+        const img =
+            new Image();
+
+
+        img.onload =
+        function() {
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+            const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            canvas.width =
+                img.width;
+
+            canvas.height =
+                img.height;
+
+
+            /*
+             * JPG does not support transparency.
+             * Use white background.
+             */
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                img.width,
+                img.height
+            );
+
+
+            convertedData =
+                canvas.toDataURL(
+                    "image/jpeg",
+                    quality.value / 100
+                );
+
+
+            const base64 =
+                convertedData.split(",")[1];
+
+
+            const jpgSize =
+                Math.round(
+                    (base64.length * 3) / 4
+                );
+
+
+            const originalSize =
+                selectedFile.size;
+
+
+            const saved =
+                Math.max(
+                    0,
+                    Math.round(
+                        (
+                            1 -
+                            jpgSize /
+                            originalSize
+                        ) * 100
+                    )
+                );
+
+
+            resultText.textContent =
+                "Original: " +
+                formatBytes(
+                    originalSize
+                ) +
+                " • JPG: " +
+                formatBytes(
+                    jpgSize
+                ) +
+                " • Size Change: " +
+                (
+                    saved >= 0
+                    ? saved + "% smaller"
+                    : Math.abs(saved) + "% larger"
+                );
+
+
+            result.style.display =
+                "block";
+
+
+            downloadButton.style.display =
+                "inline-block";
+
+        };
+
+
+        img.src =
+            event.target.result;
+
+    };
+
+
+    reader.readAsDataURL(
+        selectedFile
+    );
+
+}
+
+
+/* Download */
+
+function downloadImage() {
+
+    if (!convertedData) {
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        convertedData;
+
+
+    link.download =
+        "converted-image.jpg";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+}
+
+
+/* Clear */
+
+function clearImage() {
+
+    selectedFile =
+        null;
+
+    convertedData =
+        null;
+
+    imageInput.value =
+        "";
+
+    previewImage.src =
+        "";
+
+    fileName.textContent =
+        "";
+
+    previewBox.style.display =
+        "none";
+
+    controls.style.display =
+        "none";
+
+    result.style.display =
+        "none";
+
+    downloadButton.style.display =
+        "none";
+
+}
+
+
+/* Format bytes */
+
+function formatBytes(bytes) {
+
+    if (bytes === 0) {
+
+        return "0 Bytes";
+
+    }
+
+
+    const sizes = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        parseFloat(
+            (
+                bytes /
+                Math.pow(
+                    1024,
+                    i
+                )
+            ).toFixed(2)
+        ) +
+        " " +
+        sizes[i]
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
