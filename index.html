@@ -47,6 +47,11 @@ h1 {
 }
 
 .drop-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 2px dashed #94a3b8;
     border-radius: 18px;
     padding: 45px 20px;
@@ -54,26 +59,24 @@ h1 {
     cursor: pointer;
     transition: 0.2s;
     background: #f8fafc;
-}
-
-.drop-zone:hover,
-.drop-zone.dragover {
-    border-color: #4f46e5;
-    background: #eef2ff;
+    min-height: 180px;
 }
 
 .drop-icon {
     font-size: 45px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .drop-zone strong {
     display: block;
+    width: 100%;
     font-size: 18px;
     margin-bottom: 8px;
 }
 
 .drop-zone span {
+    display: block;
+    width: 100%;
     color: #64748b;
     font-size: 14px;
 }
