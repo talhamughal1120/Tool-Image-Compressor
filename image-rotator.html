@@ -7,7 +7,7 @@
   <title>Image Rotator & Flipper Online - Free</title>
 
   <meta name="description" content="Free online image rotator and flipper. Rotate images left or right and flip them horizontally or vertically. Supports JPG, PNG and WebP.">
-  <meta name="keywords" content="image rotator, rotate image online, flip image, image flipper, rotate jpg, rotate png, rotate webp, free image tools">
+  <meta name="keywords" content="image rotator, rotate image online, flip image, image flipper, rotate jpg, rotate png, rotate webp">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Free Image Tools">
 
@@ -75,10 +75,12 @@
       line-height: 1.6;
     }
 
+    /* Upload Area - same style as previous tools */
+
     .upload-area {
-      border: 2px dashed #9ca3af;
-      border-radius: 12px;
-      padding: 35px 20px;
+      border: 2px dashed #aaa;
+      border-radius: 10px;
+      padding: 40px 20px;
       text-align: center;
       cursor: pointer;
       background: #fafafa;
@@ -87,15 +89,28 @@
 
     .upload-area:hover {
       border-color: #2563eb;
-      background: #f0f6ff;
+      background: #f5f9ff;
     }
 
     .upload-area p {
       margin: 8px 0;
     }
 
-    .upload-area small {
+    .upload-main {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .upload-sub {
       color: #777;
+      font-size: 14px;
+    }
+
+    .upload-formats {
+      color: #888;
+      font-size: 13px;
+      margin-top: 12px !important;
     }
 
     #fileInput {
@@ -186,6 +201,7 @@
     }
 
     @media (max-width: 600px) {
+
       .controls {
         grid-template-columns: 1fr;
       }
@@ -209,6 +225,7 @@
 <body>
 
 <header>
+
   <h1>Free Image Tools</h1>
 
   <nav>
@@ -218,6 +235,7 @@
     <a href="jpg-to-webp.html">JPG to WebP</a>
     <a href="png-to-jpg.html">PNG to JPG</a>
   </nav>
+
 </header>
 
 <div class="container">
@@ -225,17 +243,32 @@
   <div class="box">
 
     <div class="intro">
+
       <h2>Image Rotator & Flipper</h2>
+
       <p>
         Rotate or flip your image online for free.
         Supports JPG, PNG and WebP images.
       </p>
+
     </div>
 
+    <!-- Upload Area -->
+
     <label for="fileInput" class="upload-area" id="uploadArea">
-      <p><strong>Click here to upload an image</strong></p>
-      <p>or drag & drop your image here</p>
-      <small>JPG, PNG or WebP</small>
+
+      <p class="upload-main">
+        Click to upload an image
+      </p>
+
+      <p class="upload-sub">
+        or drag & drop your image here
+      </p>
+
+      <p class="upload-formats">
+        Supported formats: JPG, JPEG, PNG, WebP
+      </p>
+
     </label>
 
     <input
@@ -243,6 +276,8 @@
       id="fileInput"
       accept="image/jpeg,image/png,image/webp"
     >
+
+    <!-- Preview -->
 
     <div class="preview-box" id="previewBox">
 
@@ -252,29 +287,46 @@
 
       <div class="controls">
 
-        <button class="rotate-btn" id="rotateLeft" disabled>
+        <button
+          class="rotate-btn"
+          id="rotateLeft"
+          disabled>
           ↺ Rotate Left
         </button>
 
-        <button class="rotate-btn" id="rotateRight" disabled>
+        <button
+          class="rotate-btn"
+          id="rotateRight"
+          disabled>
           ↻ Rotate Right
         </button>
 
-        <button class="flip-btn" id="flipHorizontal" disabled>
+        <button
+          class="flip-btn"
+          id="flipHorizontal"
+          disabled>
           ↔ Flip Horizontal
         </button>
 
-        <button class="flip-btn" id="flipVertical" disabled>
+        <button
+          class="flip-btn"
+          id="flipVertical"
+          disabled>
           ↕ Flip Vertical
         </button>
 
       </div>
 
-      <button class="download-btn" id="downloadBtn" disabled>
+      <button
+        class="download-btn"
+        id="downloadBtn"
+        disabled>
         Download Image
       </button>
 
-      <button class="clear-btn" id="clearBtn">
+      <button
+        class="clear-btn"
+        id="clearBtn">
         Clear
       </button>
 
@@ -293,6 +345,7 @@
 </footer>
 
 <script>
+
   const fileInput = document.getElementById("fileInput");
   const uploadArea = document.getElementById("uploadArea");
 
@@ -302,54 +355,84 @@
 
   const rotateLeft = document.getElementById("rotateLeft");
   const rotateRight = document.getElementById("rotateRight");
-  const flipHorizontal = document.getElementById("flipHorizontal");
-  const flipVertical = document.getElementById("flipVertical");
 
-  const downloadBtn = document.getElementById("downloadBtn");
-  const clearBtn = document.getElementById("clearBtn");
+  const flipHorizontal =
+    document.getElementById("flipHorizontal");
 
-  const info = document.getElementById("info");
+  const flipVertical =
+    document.getElementById("flipVertical");
+
+  const downloadBtn =
+    document.getElementById("downloadBtn");
+
+  const clearBtn =
+    document.getElementById("clearBtn");
+
+  const info =
+    document.getElementById("info");
+
 
   let originalImage = new Image();
 
   let rotation = 0;
+
   let flipX = 1;
+
   let flipY = 1;
 
-  let fileName = "rotated-image.png";
+  let fileName = "rotated-image";
+
 
   function handleFile(file) {
 
-    if (!file) return;
-
-    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
-      alert("Please select a JPG, PNG or WebP image.");
+    if (!file) {
       return;
     }
 
-    fileName = file.name;
+    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+
+      alert("Please select a JPG, PNG or WebP image.");
+
+      return;
+    }
+
+
+    fileName = file.name.replace(/\.[^/.]+$/, "");
+
 
     const reader = new FileReader();
+
 
     reader.onload = function(e) {
 
       originalImage = new Image();
 
+
       originalImage.onload = function() {
 
         rotation = 0;
+
         flipX = 1;
+
         flipY = 1;
+
 
         previewBox.style.display = "block";
 
+
         rotateLeft.disabled = false;
+
         rotateRight.disabled = false;
+
         flipHorizontal.disabled = false;
+
         flipVertical.disabled = false;
+
         downloadBtn.disabled = false;
 
+
         drawImage();
+
 
         info.innerHTML =
           "Original size: " +
@@ -357,38 +440,73 @@
           " × " +
           originalImage.height +
           " px";
+
       };
 
+
       originalImage.src = e.target.result;
+
     };
 
+
     reader.readAsDataURL(file);
+
   }
+
 
   function drawImage() {
 
-    const angle = rotation * Math.PI / 180;
+    const angle =
+      rotation * Math.PI / 180;
 
-    const width = originalImage.width;
-    const height = originalImage.height;
+
+    const width =
+      originalImage.width;
+
+    const height =
+      originalImage.height;
+
 
     if (rotation === 90 || rotation === 270) {
+
       canvas.width = height;
+
       canvas.height = width;
+
     } else {
+
       canvas.width = width;
+
       canvas.height = height;
+
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
 
     ctx.save();
 
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+
+    ctx.translate(
+      canvas.width / 2,
+      canvas.height / 2
+    );
+
 
     ctx.rotate(angle);
 
-    ctx.scale(flipX, flipY);
+
+    ctx.scale(
+      flipX,
+      flipY
+    );
+
 
     ctx.drawImage(
       originalImage,
@@ -398,125 +516,232 @@
       height
     );
 
+
     ctx.restore();
+
   }
 
-  rotateLeft.addEventListener("click", function() {
 
-    rotation -= 90;
+  rotateLeft.addEventListener(
+    "click",
+    function() {
 
-    if (rotation < 0) {
-      rotation = 270;
+      rotation -= 90;
+
+
+      if (rotation < 0) {
+        rotation = 270;
+      }
+
+
+      drawImage();
+
     }
+  );
 
-    drawImage();
-  });
 
-  rotateRight.addEventListener("click", function() {
+  rotateRight.addEventListener(
+    "click",
+    function() {
 
-    rotation += 90;
+      rotation += 90;
 
-    if (rotation >= 360) {
+
+      if (rotation >= 360) {
+        rotation = 0;
+      }
+
+
+      drawImage();
+
+    }
+  );
+
+
+  flipHorizontal.addEventListener(
+    "click",
+    function() {
+
+      flipX *= -1;
+
+      drawImage();
+
+    }
+  );
+
+
+  flipVertical.addEventListener(
+    "click",
+    function() {
+
+      flipY *= -1;
+
+      drawImage();
+
+    }
+  );
+
+
+  downloadBtn.addEventListener(
+    "click",
+    function() {
+
+      if (!originalImage.src) {
+        return;
+      }
+
+
+      canvas.toBlob(
+        function(blob) {
+
+          const url =
+            URL.createObjectURL(blob);
+
+
+          const link =
+            document.createElement("a");
+
+
+          link.href = url;
+
+
+          link.download =
+            fileName + "-rotated.png";
+
+
+          document.body.appendChild(link);
+
+
+          link.click();
+
+
+          document.body.removeChild(link);
+
+
+          URL.revokeObjectURL(url);
+
+        },
+        "image/png"
+      );
+
+    }
+  );
+
+
+  clearBtn.addEventListener(
+    "click",
+    function() {
+
+      fileInput.value = "";
+
+
+      previewBox.style.display = "none";
+
+
+      rotateLeft.disabled = true;
+
+      rotateRight.disabled = true;
+
+      flipHorizontal.disabled = true;
+
+      flipVertical.disabled = true;
+
+      downloadBtn.disabled = true;
+
+
       rotation = 0;
+
+      flipX = 1;
+
+      flipY = 1;
+
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      info.innerHTML =
+        "Upload an image to start.";
+
     }
+  );
 
-    drawImage();
-  });
 
-  flipHorizontal.addEventListener("click", function() {
+  fileInput.addEventListener(
+    "change",
+    function() {
 
-    flipX *= -1;
+      if (fileInput.files.length > 0) {
 
-    drawImage();
-  });
+        handleFile(
+          fileInput.files[0]
+        );
 
-  flipVertical.addEventListener("click", function() {
+      }
 
-    flipY *= -1;
-
-    drawImage();
-  });
-
-  downloadBtn.addEventListener("click", function() {
-
-    if (!originalImage.src) return;
-
-    canvas.toBlob(function(blob) {
-
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-
-      link.href = url;
-
-      const baseName = fileName
-        .replace(/\.[^/.]+$/, "");
-
-      link.download = baseName + "-rotated.png";
-
-      document.body.appendChild(link);
-
-      link.click();
-
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(url);
-
-    }, "image/png");
-  });
-
-  clearBtn.addEventListener("click", function() {
-
-    fileInput.value = "";
-
-    previewBox.style.display = "none";
-
-    rotateLeft.disabled = true;
-    rotateRight.disabled = true;
-    flipHorizontal.disabled = true;
-    flipVertical.disabled = true;
-    downloadBtn.disabled = true;
-
-    rotation = 0;
-    flipX = 1;
-    flipY = 1;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    info.innerHTML = "Upload an image to start.";
-  });
-
-  fileInput.addEventListener("change", function() {
-
-    if (fileInput.files.length > 0) {
-      handleFile(fileInput.files[0]);
     }
+  );
 
-  });
 
-  uploadArea.addEventListener("dragover", function(e) {
+  uploadArea.addEventListener(
+    "dragover",
+    function(e) {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    uploadArea.style.borderColor = "#2563eb";
-  });
+      uploadArea.style.borderColor =
+        "#2563eb";
 
-  uploadArea.addEventListener("dragleave", function() {
+      uploadArea.style.background =
+        "#f5f9ff";
 
-    uploadArea.style.borderColor = "#9ca3af";
-  });
-
-  uploadArea.addEventListener("drop", function(e) {
-
-    e.preventDefault();
-
-    uploadArea.style.borderColor = "#9ca3af";
-
-    if (e.dataTransfer.files.length > 0) {
-      handleFile(e.dataTransfer.files[0]);
     }
+  );
 
-  });
+
+  uploadArea.addEventListener(
+    "dragleave",
+    function() {
+
+      uploadArea.style.borderColor =
+        "#aaa";
+
+      uploadArea.style.background =
+        "#fafafa";
+
+    }
+  );
+
+
+  uploadArea.addEventListener(
+    "drop",
+    function(e) {
+
+      e.preventDefault();
+
+
+      uploadArea.style.borderColor =
+        "#aaa";
+
+      uploadArea.style.background =
+        "#fafafa";
+
+
+      if (e.dataTransfer.files.length > 0) {
+
+        handleFile(
+          e.dataTransfer.files[0]
+        );
+
+      }
+
+    }
+  );
+
 </script>
 
 </body>
